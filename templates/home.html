@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Home
+{% endblock %}
+
+{% block content %}
+
+{% comment %} <div class="col-md-6 offset-md-3"> {% endcomment %}
+  {% if user.is_authenticated %}
+  {% comment %} <h2>Weclome {{ user.username }}</h2> {% endcomment %}
+   
+    
+     <h1>Records ....</h1>
+     
+         
+
+        <table class="table  table-hover table-bordered border-primary ">
+          <thead>
+            <tr>
+              
+             
+              <th  class="table-primary"  scope="col">ID</th>
+              <th class="table-primary"  scope="col">CREATED_DATE</th>
+              <th class="table-primary"  scope="col"> NAME</th>
+              {% comment %} <th class="table-primary"  scope="col">LAST NAME</th> {% endcomment %}
+              <th class="table-primary"  scope="col">EMAL</th>
+              <th class="table-primary"  scope="col">PHONE</th>
+              <th class="table-primary"  scope="col">ADDRESS</th>
+              <th class="table-primary"  scope="col">CITY</th>
+              <th class="table-primary"  scope="col">STATE</th>
+              <th class="table-primary"  scope="col">ZIPCODE</th>
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {% if records %}
+        {% for record in records %}
+        <td class="table-light" ><a href="{% url 'record' record.id %}">{{ record.id }}</a></td>
+              <td  class="table-light"  >{{record.created_date}} </td>
+              <td class="table-light"  >{{record.first_name|upper}}  {{record.last_name|upper}}</td>
+              {% comment %} <td class="table-light"  >{{record.last_name|upper}}</td> {% endcomment %}
+              <td class="table-light" >{{record.email}}</td>
+              <td class="table-light" >{{record.phone}}</td>
+              <td class="table-light" >{{record.address|title }}</td>
+              <td class="table-light" >{{record.city|title}}</td>
+              <td class="table-light" >{{record.state|title}}</td>
+              <td class="table-light" >{{record.zipcode}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        {% comment %} <td><a href="{% url 'record' record.id %}">{{ record.id }}</a></td> {% endcomment %}
+
+       
+      {% endif %} 
+
+      
+      {% else %}
+      <div class="col-md-6 offset-md-3">
+      <h2 class="mt-1">Login User</h2><br />
+      <form method="POST" action="/">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="text1" class="form-label">Username</label>
+          <input type="text" class="form-control" id="text1" aria-describedby="emailHelp" placeholder="Username" name="username" required />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-control" name="password1" placeholder="*******" required />
+        </div>
+
+        <button type="submit" class="btn btn-outline-primary">Login</button>
+      </form>
+      </div>
+  {% endif %}
+{% endblock %}
